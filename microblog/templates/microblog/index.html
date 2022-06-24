@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina inicial</title>
+</head>
+<body>
+    
+    {% if user.is_authenticated %}
+
+        <div><p>{{ usuario.nome }}</p></div>
+
+        <a href="http://localhost:8000/post/">
+          <button type="submit">            
+              Fazer Post
+          </button> 
+        </a>
+
+        <a href="http://localhost:8000/logout/">
+          <button type="submit">            
+              Sair
+          </button> 
+        </a>
+
+    {% else %}
+
+        <h1>Você não está logado</h1>
+        <a href="http://localhost:8000/login/">
+            <button type="submit">            
+                Fazer login
+            </button> 
+        </a>
+
+    {% endif %}
+
+</body>
+</html>

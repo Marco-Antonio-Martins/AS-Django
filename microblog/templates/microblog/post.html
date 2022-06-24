@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+
+        <h1>Publicação</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Publicar Post</button>
+        </form>
+
+        <a href="http://localhost:8000/inicio/">
+            <button type="submit">            
+                Pagina inicial
+            </button> 
+        </a>
+
+        <a href="http://localhost:8000/logout/">
+            <button type="submit">            
+                Sair
+            </button> 
+        </a>
+
+    {% else %}
+
+        <h1>Você não está logado</h1>
+        <a href="http://localhost:8000/login/">
+            <button type="submit">            
+                Fazer login
+            </button> 
+        </a>
+        
+    {% endif %}
+
+</body>
+</html>
