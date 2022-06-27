@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'microblog',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
