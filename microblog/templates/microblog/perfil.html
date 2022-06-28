@@ -23,27 +23,37 @@
       aria-label="Main navigation"
     >
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">FC Solutions©</a>
-
-        <!--<a href="#"
-          ><button class="btn btn-outline-danger" type="submit">
-            Sair
-          </button></a
-        >-->
+        <a class="navbar-brand" href="http://localhost:8000/inicio"
+          >FC Solutions©</a
+        >
 
         <div
           class="navbar-collapse offcanvas-collapse"
           id="navbarsExampleDefault"
         ></div>
+        {% if user.is_authenticated %}
+        <a href="http://localhost:8000/conta/logout"
+          ><button class="btn btn-outline-light" type="submit">Sair</button></a
+        >
+
+        {% else %}
+        <a href="http://localhost:8000/conta/login"
+          ><button class="btn btn-outline-light" type="submit">
+            Fazer Login
+          </button></a
+        >
+        {% endif %}
       </div>
     </nav>
     <div class="nav-scroller bg-body shadow-sm">
       <nav class="nav nav-underline" aria-label="Secondary navigation">
-        <!--<a class="nav-link active" aria-current="page" href="#">Seguir</a>-->
-        <a class="nav-link" href="#">{{ pessoa.nome }}</a>
-        <a class="nav-link" href="#">Grupo 2</a>
-        <a class="nav-link" href="#">Grupo 3</a>
-        <a class="nav-link" href="#">Grupo 4</a>
+        <a class="nav-link active" aria-current="page" href="#"
+          >Perfil {{ pessoa.nome }}</a
+        >
+        <a class="nav-link" href="http://localhost:8000/">Perfil</a>
+        <a class="nav-link" href="http://localhost:8000/inicio"
+          >Página Inicial</a
+        >
       </nav>
     </div>
 
@@ -52,9 +62,31 @@
         class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm"
       >
         <div class="lh-1">
-          <h1 class="h6 mb-0 text-white lh-1">{{pessoa.nome}}</h1>
-          <small> escrever algo </small>
+          <h1 class="h6 mb-0 text-white lh-1" style="width: max-content">
+            {{pessoa.nome}} 
+          </h1>
         </div>
+        <div
+          class="navbar-collapse offcanvas-collapse"
+          id="navbarsExampleDefault"
+        ></div>
+        {% if user.is_authenticated %} {% if seguidora %}
+        <a href="http://localhost:8000/"
+          ><button
+            class="btn btn-outline-light"
+            type="submit"
+            style="width: max-content"
+          >
+            Deixar de seguir
+          </button></a
+        >
+        {% else %} {% if usuario != pessoa %}
+        <a href="http://localhost:8000/"
+          ><button class="btn btn-outline-light" type="submit">
+            Seguir
+          </button></a
+        >
+        {% endif %} {% endif %} {% endif %}
       </div>
 
       <div class="my-3 p-3 bg-body rounded shadow-sm">

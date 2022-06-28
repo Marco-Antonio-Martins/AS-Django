@@ -1,3 +1,4 @@
+from xmlrpc.client import boolean
 from django.http import Http404
 from django.shortcuts import render
 from .forms import PostForm
@@ -47,23 +48,37 @@ def perfil_usuario(request): #Mostra o perfil do usuário logado
 def usuario(request, user): #Mostra o perfil do usuário solicitado
 
     try:
-        
+        usuario = request.user
+        seguidora = False
         pessoa = Pessoa.objects.get(usuario__username__contains=user)
+        posts = pessoa.post_set.all()
+        if usuario.is_authenticated:            
+            usuario = Pessoa.objects.get(usuario=usuario)   
+
+            for s in usuario.get_seguidores():
+                seguidor = Pessoa.objects.get(usuario = s)
+                if seguidor == pessoa:
+                    if seguidor != usuario:
+                        seguidora = True
 
     except Pessoa.DoesNotExist:
 
         raise Http404('Nome de Usuário não encontrado')
 
-    posts = pessoa.post_set.all()
-
-    return render(request, 'microblog/perfil.html', {'pessoa' : pessoa, 'posts' : posts})
+    return render(request, 'microblog/perfil.html', {'usuario' : usuario,'pessoa' : pessoa, 'posts' : posts, 'seguidora' : seguidora})
 
 def index(request): #Mostra o perfil do usuário logado
 
     usuario = request.user
+    seguidores = []
           
     if usuario.is_authenticated:
 
-        usuario = Pessoa.objects.get(usuario = request.user)      
+        usuario = Pessoa.objects.get(usuario = request.user)  
     
-    return render(request, 'microblog/index.html', {'usuario' : usuario})
+        for s in usuario.get_seguidores():
+            seguidor = Pessoa.objects.get(usuario = s)
+            if seguidor != usuario:
+                seguidores.append(seguidor)
+    
+    return render(request, 'microblog/index.html', {'usuario' : usuario, 'lista_seguidores' : seguidores})

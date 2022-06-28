@@ -23,7 +23,7 @@
       aria-label="Main navigation"
     >
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">FC Solutions©</a>
+        <a class="navbar-brand" href="http://localhost:8000/inicio">FC Solutions©</a>
 
         <div
           class="navbar-collapse offcanvas-collapse"
@@ -61,12 +61,22 @@
 
       {% else %}
 
-      <h1>Você não está logado</h1>
-      <a href="http://localhost:8000/conta/login/">
-        <button type="submit">Fazer login</button>
-      </a>
-    </div>
+      <nav
+      class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+      aria-label="Main navigation"
+      >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">FC Solutions©</a>
+      </div>
+      </nav>
 
-    {% endif %}
+      <div class="text-center">
+        <h1>Você não está logado</h1>
+        <a href="http://localhost:8000/conta/login"
+         ><button class="btn btn-primary" type="submit">Fazer login</button></a
+        >
+      </div>
+      {% endif %}
+      
   </body>
 </html>
