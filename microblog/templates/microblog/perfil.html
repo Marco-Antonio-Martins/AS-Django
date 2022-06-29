@@ -63,7 +63,7 @@
       >
         <div class="lh-1">
           <h1 class="h6 mb-0 text-white lh-1" style="width: max-content">
-            {{pessoa.nome}} 
+            {{ pessoa.nome }}
           </h1>
         </div>
         <div
@@ -71,21 +71,20 @@
           id="navbarsExampleDefault"
         ></div>
         {% if user.is_authenticated %} {% if seguidora %}
-        <a href="http://localhost:8000/"
-          ><button
-            class="btn btn-outline-light"
-            type="submit"
-            style="width: max-content"
-          >
+        <form action="followers" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="is_follow" value="unfollow" />
+          <button class="btn btn-outline-light" style="width: max-content">
             Deixar de seguir
-          </button></a
-        >
+          </button>
+        </form>
         {% else %} {% if usuario != pessoa %}
-        <a href="http://localhost:8000/"
-          ><button class="btn btn-outline-light" type="submit">
-            Seguir
-          </button></a
-        >
+        <form action="followers" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="is_follow" value="follow" />
+          <button class="btn btn-outline-light">Seguir</button>
+        </form>
+
         {% endif %} {% endif %} {% endif %}
       </div>
 

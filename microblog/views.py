@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 from xmlrpc.client import boolean
 from django.http import Http404
 from django.shortcuts import render
@@ -82,3 +83,28 @@ def index(request): #Mostra o perfil do usuário logado
                 seguidores.append(seguidor)
     
     return render(request, 'microblog/index.html', {'usuario' : usuario, 'lista_seguidores' : seguidores})
+
+def followers(request, user):
+    if request.method == 'POST':
+        try:
+            usuario = request.user
+            is_follow = request.POST['is_follow']
+            
+            if usuario.is_authenticated:            
+                usuario = Pessoa.objects.get(usuario=usuario)   
+                pessoa = Pessoa.objects.get(usuario__username__contains=user)
+
+                if is_follow == 'follow':
+                    seg = usuario.seguindo.add(pessoa)
+                    seg.save()
+                if is_follow == 'unfollow':
+                    Pessoa.objects.filter(seguindo=pessoa)
+                    
+
+        except Pessoa.DoesNotExist:
+
+            raise Http404('Nome de Usuário não encontrado')
+
+    return reverse('usuario')
+
+ 

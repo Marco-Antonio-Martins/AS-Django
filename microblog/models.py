@@ -7,7 +7,7 @@ class Pessoa(models.Model):
 
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Usuário', unique=True)
     nome = models.CharField(max_length=150)
-    seguindo = models.ManyToManyField(User, blank=True, related_name='seguindo')
+    seguindo = models.ManyToManyField(User, blank=True, related_name='seguindo') #releted_name é pra n usar _set.all
 
     def get_seguidores(self):
         return self.seguindo.all()
