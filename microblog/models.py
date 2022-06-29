@@ -15,8 +15,8 @@ class Pessoa(models.Model):
     def __str__(self):
         return self.nome
 
-    def arroba(self):
-        return self.usuario.get_username()
+    '''def arroba(self):
+        return self.usuario.get_username()'''
 
 class Post(models.Model):
 

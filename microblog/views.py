@@ -1,6 +1,4 @@
-from multiprocessing.sharedctypes import Value
-from xmlrpc.client import boolean
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import PostForm
 from .models import Pessoa, Post
@@ -68,7 +66,7 @@ def usuario(request, user): #Mostra o perfil do usuário solicitado
 
     return render(request, 'microblog/perfil.html', {'usuario' : usuario,'pessoa' : pessoa, 'posts' : posts, 'seguidora' : seguidora})
 
-def index(request): #Mostra o perfil do usuário logado
+def pagina_inicial(request): #Mostra o perfil do usuário logado
 
     usuario = request.user
     seguidores = []
@@ -82,7 +80,7 @@ def index(request): #Mostra o perfil do usuário logado
             if seguidor != usuario:
                 seguidores.append(seguidor)
     
-    return render(request, 'microblog/index.html', {'usuario' : usuario, 'lista_seguidores' : seguidores})
+    return render(request, 'microblog/pagina_inicial.html', {'usuario' : usuario, 'lista_seguidores' : seguidores})
 
 def followers(request, user):
     if request.method == 'POST':
@@ -91,20 +89,18 @@ def followers(request, user):
             is_follow = request.POST['is_follow']
             
             if usuario.is_authenticated:            
-                usuario = Pessoa.objects.get(usuario=usuario)   
-                pessoa = Pessoa.objects.get(usuario__username__contains=user)
+                usuario = Pessoa.objects.get(usuario_id=request.user.id)   
+                pessoa = Pessoa.objects.get(usuario__username=user)
 
                 if is_follow == 'follow':
-                    seg = usuario.seguindo.add(pessoa)
-                    seg.save()
+                    usuario.seguindo.add(pessoa.usuario)
                 if is_follow == 'unfollow':
-                    Pessoa.objects.filter(seguindo=pessoa)
+                    usuario.seguindo.remove(pessoa.usuario.id)
                     
 
         except Pessoa.DoesNotExist:
 
             raise Http404('Nome de Usuário não encontrado')
 
-    return reverse('usuario')
-
+    return HttpResponseRedirect(reverse('usuario', args=[user]))
  
