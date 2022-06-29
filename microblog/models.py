@@ -20,6 +20,7 @@ class Pessoa(models.Model):
 
 class Post(models.Model):
 
+    
     autor = models.ForeignKey(Pessoa, on_delete=models.CASCADE, verbose_name="Autor")
     conteudo = models.CharField(max_length=200)
     data = models.DateTimeField(auto_now_add=True)
@@ -29,12 +30,6 @@ class Post(models.Model):
     
     def __str__(self):
         return self.conteudo
-
-    #SilvioEdit // Função que retorna a descrição curta de 100 caracteres do conteudo
-    @property
-    def descricao_curta(self):
-        return truncatechars(self.conteudo, 100) 
-    # Exemplo de uso no admin.py
                                                                 
 
 class Comentario(models.Model):
@@ -49,13 +44,4 @@ class Comentario(models.Model):
 
     def __str__(self):
         return self.conteudo
-
-    #SilvioEdit // Aqui foram precisas duas funções por conta das duas variaveis serem max_length=200
-    @property
-    def descricao_curta_post(self):
-        return truncatechars(self.post, 100) 
-    @property
-    def descricao_curta_comentario(self):
-        return truncatechars(self.conteudo, 100)
-
         

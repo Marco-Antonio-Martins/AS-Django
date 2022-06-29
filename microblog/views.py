@@ -25,7 +25,7 @@ class PostView(FormView):
           
 
     def get_success_url(self):
-        return reverse('post_sucesso')
+        return reverse('post') #alterar para post_sucesso
 
 
 class PostSucessoView(TemplateView):
@@ -66,10 +66,10 @@ def usuario(request, user): #Mostra o perfil do usuário solicitado
 
     return render(request, 'microblog/perfil.html', {'usuario' : usuario,'pessoa' : pessoa, 'posts' : posts, 'seguidora' : seguidora})
 
-def pagina_inicial(request): #Mostra o perfil do usuário logado
+def pagina_inicial(request): #Mostra a página inicial do usuário logado
 
     usuario = request.user
-    seguidores = []
+    posts = []
           
     if usuario.is_authenticated:
 
@@ -78,9 +78,11 @@ def pagina_inicial(request): #Mostra o perfil do usuário logado
         for s in usuario.get_seguidores():
             seguidor = Pessoa.objects.get(usuario = s)
             if seguidor != usuario:
-                seguidores.append(seguidor)
+                for p in seguidor.post_set.all():
+                    if len(posts) < 30:
+                        posts.append(p)
     
-    return render(request, 'microblog/pagina_inicial.html', {'usuario' : usuario, 'lista_seguidores' : seguidores})
+    return render(request, 'microblog/pagina_inicial.html', {'usuario' : usuario, 'posts' : posts})
 
 def followers(request, user):
     if request.method == 'POST':
@@ -104,3 +106,5 @@ def followers(request, user):
 
     return HttpResponseRedirect(reverse('usuario', args=[user]))
  
+def publicacao_extended(request):
+    pass

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import PostView, perfil_usuario, PostSucessoView, pagina_inicial
+from .views import PostView, perfil_usuario, PostSucessoView, pagina_inicial, publicacao_extended
 
 urlpatterns = [
     path('conta/', include('django.contrib.auth.urls')),
@@ -7,5 +7,5 @@ urlpatterns = [
     path('post/', PostView.as_view(), name="post"),
     path('sucesso/', PostSucessoView.as_view(), name="post_sucesso"),
     path('inicio/', pagina_inicial, name="index"),
-    #path('publicacao/')
+    path('publicacao/', publicacao_extended, name='publicacao')
 ]
