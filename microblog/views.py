@@ -25,7 +25,7 @@ class PostView(FormView):
           
 
     def get_success_url(self):
-        return reverse('post') #alterar para post_sucesso
+        return reverse('perfil_usuario')
 
 
 class PostSucessoView(TemplateView):
@@ -73,7 +73,7 @@ def pagina_inicial(request): #Mostra a página inicial do usuário logado
           
     if usuario.is_authenticated:
 
-        usuario = Pessoa.objects.get(usuario = request.user)  
+        usuario = Pessoa.objects.get(usuario = usuario)  
     
         for s in usuario.get_seguidores():
             seguidor = Pessoa.objects.get(usuario = s)

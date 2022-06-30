@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.template.defaultfilters import truncatechars
 
 
 class Pessoa(models.Model):
@@ -14,9 +13,6 @@ class Pessoa(models.Model):
     
     def __str__(self):
         return self.nome
-
-    '''def arroba(self):
-        return self.usuario.get_username()'''
 
 class Post(models.Model):
 
