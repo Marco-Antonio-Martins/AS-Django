@@ -51,7 +51,7 @@
       <form method="post">
         {% csrf_token %} {{ form|crispy }}
         <button
-          class="bnt btn-outline-dark"
+          class="btn btn-outline-dark"
           type="submit"
           style="margin-block: 0.9em"
         >
@@ -71,7 +71,7 @@
       </nav>
 
       <div class="text-center">
-        <h1>Você não está logado</h1>
+        <h1 style="padding: 1em;">Você não está logado</h1>
         <a href="http://localhost:8000/conta/login"
          ><button class="btn btn-primary" type="submit">Fazer login</button></a
         >

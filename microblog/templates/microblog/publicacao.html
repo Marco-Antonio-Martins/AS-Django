@@ -55,30 +55,28 @@
         <div
             class="navbar-collapse offcanvas-collapse"
             id="navbarsExampleDefault"
+            
           ></div>
-
-          <form action="http://localhost:8000/publicacao/" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="id_publi" value="{{publicacao.id}}" />
-            <button
-              class="btn btn-outline-light"
-              style="width: max-content; font-size: small"
-            >
-            Fazer comentário
+          <a href="{% url 'comentario' publicacao.id %}" > 
+            <button class="btn btn-outline-light" style="width: max-content">
+              Comentar
             </button>
-          </form>
+          </a>
+
       </div>
 
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         {% if comentarios %}
         {% for c in comentarios %}
-        <h6 class="border-bottom pb-2 mb-0">{{ c.autor.nome }}</h6>        
-        <div class="d-flex text-muted pt-3">
-          <p class="pb-3 mb-0 small lh-sm">
-            <strong class="d-block text-gray-dark" style="width: 50em">
-              {{ c.conteudo }} </strong
-            >{{ c.data }}
-          </p>
+        <div style="margin-block: 10px;">
+          <h6 class="border-bottom pb-2 mb-0">{{ c.autor.nome }}</h6>
+          <div class="d-flex text-muted pt-3">
+            <p class="pb-3 mb-0 small lh-sm">
+              <strong class="d-block text-gray-dark" style="width: 50em">
+                {{ c.conteudo }} </strong
+              >{{ c.data }} 
+            </p>
+        </div>
         {% endfor %}
         {% else %}
         <h6 class="border-bottom pb-2 mb-0">Não há comentários nessa publicação</h6>        

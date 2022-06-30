@@ -9,5 +9,5 @@ urlpatterns = [
     path('sucesso/', PostSucessoView.as_view(), name="post_sucesso"),
     path('inicio/', pagina_inicial, name="index"),
     path('publicacao/<int:id_publi>', publicacao, name="publicacao"),
-    path('comentario/', ComentarioView.as_view(), name="comentario"),
+    path('comentario/<int:id_publi>', ComentarioView.as_view(), name="comentario"),
 ]

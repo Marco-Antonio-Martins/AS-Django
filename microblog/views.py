@@ -1,5 +1,3 @@
-from tkinter.tix import Form
-from urllib import request
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import PostForm, ComentarioForm
@@ -110,7 +108,9 @@ def followers(request, user):
 
 def publicacao(request, id_publi):
 
-    usuario = Pessoa.objects.get(usuario = request.user)
+    usuario = request.user
+    if usuario.is_authenticated:
+        usuario = Pessoa.objects.get(usuario = request.user)
     publicacao = Post.objects.get(pk=id_publi)
     pessoa = Pessoa.objects.get(usuario=publicacao.autor.usuario)
     comentarios = publicacao.comentario_set.all()
@@ -121,17 +121,21 @@ class ComentarioView(FormView):
     template_name = 'microblog/comentario.html'
     form_class = ComentarioForm
 
-    def get(self, request):
-        usuario = Pessoa.objects.get(usuario = self.request.user)
-        pk_publi = request.POST['publi']
-        publicacao = Post.objects.get(pk=pk_publi)
+    def get(self, request, **kwargs):
+
+        usuario = self.request.user
+        if usuario.is_authenticated:
+            usuario = Pessoa.objects.get(usuario = usuario)
+        publicacao = Post.objects.get(pk=kwargs['id_publi'])
         return render (request, self.template_name, {'usuario' : usuario, 'publicacao' : publicacao, 'form' : self.form_class })
     
     def form_valid(self, form):  
 
+        usuario = self.request.user
+
         if usuario.is_authenticated:
 
-            usuario = Pessoa.objects.get(usuario = self.request.user)            
+            usuario = Pessoa.objects.get(usuario = usuario)            
             dados = form.clean()
             publicacao = Post.objects.get(pk=dados['id_publi'])
             comentario = Comentario(autor=usuario, post=publicacao, conteudo=dados['comentario'])
@@ -140,4 +144,5 @@ class ComentarioView(FormView):
           
 
     def get_success_url(self):
-        return reverse('index') #alterar para post_sucesso
+        id = str(self.kwargs['id_publi'])
+        return reverse('publicacao', args=[id])
