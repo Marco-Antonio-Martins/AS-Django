@@ -18,68 +18,59 @@
   </head>
   <body class="bg-light">
     {% if user.is_authenticated %}
-    <nav
-      class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
-      aria-label="Main navigation"
-    >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8000/inicio">FC Solutions©</a>
+      <nav
+        class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+        aria-label="Main navigation">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="http://localhost:8000/inicio">FC Solutions©</a>
+          <div
+            class="navbar-collapse offcanvas-collapse"
+            id="navbarsExampleDefault"
+          ></div>
 
-        <div
-          class="navbar-collapse offcanvas-collapse"
-          id="navbarsExampleDefault"
-        ></div>
+          <a href="http://localhost:8000/inicio/"
+            ><button
+              class="btn btn-outline-light"
+              type="submit"
+              style="margin-inline: 0.9em"
+            >
+              Pagina inicial
+            </button>
+          </a>
+          <a href="http://localhost:8000/conta/logout"
+            ><button class="btn btn-outline-light" type="submit">Sair</button>
+          </a>
+        </div>
+      </nav>
 
-        <a href="http://localhost:8000/inicio/"
-          ><button
-            class="btn btn-outline-light"
+      <div class="text-center">
+        <h1 style="margin-block: 0.5em; padding: 1em;">Comentário</h1>        
+        <form method="post">
+          {% csrf_token %} {{ form|crispy }}
+          <input type="hidden" name="id_publi" value="{{ publicacao.id }}">
+          <button
+            class="btn btn-outline-dark"
             type="submit"
-            style="margin-inline: 0.9em"
+            style="margin-block: 0.9em"
           >
-            Pagina inicial
+            Adicionar comentário
           </button>
-        </a>
-
-        <a href="http://localhost:8000/conta/logout"
-          ><button class="btn btn-outline-light" type="submit">Sair</button>
-        </a>
-
-      </div>
-    </nav>
-
-    <div class="text-center">
-      <h1 style="margin-block: 0.5em; padding: 1em;">Comentário</h1>
-      
-      <form method="post">
-        {% csrf_token %} {{ form|crispy }}
-        <input type="hidden" name="id_publi" value="{{ publicacao.id }}">
-        <button
-          class="btn btn-outline-dark"
-          type="submit"
-          style="margin-block: 0.9em"
-        >
-          Adicionar comentário
-        </button>
-      </form>
-
-      {% else %}
-
+        </form>
+    {% else %}
       <nav
       class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
       aria-label="Main navigation"
       >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">FC Solutions©</a>
-      </div>
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">FC Solutions©</a>
+        </div>
       </nav>
-
       <div class="text-center">
         <h1 style="padding: 1em;">Você não está logado</h1>
         <a href="http://localhost:8000/conta/login"
-         ><button class="btn btn-primary" type="submit">Fazer login</button></a
+        ><button class="btn btn-primary" type="submit">Fazer login</button></a
         >
       </div>
-      {% endif %}
-      
+    {% endif %}      
   </body>
 </html>

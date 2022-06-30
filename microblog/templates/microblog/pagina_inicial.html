@@ -15,104 +15,120 @@
       rel="stylesheet"
     />
   </head>
-
   <body class="bg-light">
     {% if user.is_authenticated %}
-    <nav
-      class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
-      aria-label="Main navigation"
-    >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8000/inicio"
-          >FC Solutions©</a
-        >
-
-        <div
-          class="navbar-collapse offcanvas-collapse"
-          id="navbarsExampleDefault"
-        ></div>
-
-        <a href="http://localhost:8000/post"
-          ><button
-            class="btn btn-outline-light"
-            type="submit"
-            style="margin-inline: 0.9em"
-          >
-            Publicar
-          </button>
-        </a>
-
-        <a href="http://localhost:8000/conta/logout"
-          ><button class="btn btn-outline-light" type="submit">Sair</button>
-        </a>
-      </div>
-    </nav>
-    <div class="nav-scroller bg-body shadow-sm">
-      <nav class="nav nav-underline" aria-label="Secondary navigation">
-        <a
-          class="nav-link active"
-          aria-current="page"
-          href="http://localhost:8000/inicio"
-          >Página Inicial</a
-        >
-        <a class="nav-link" href="http://localhost:8000/perfil">Perfil</a>
-      </nav>
-    </div>
-
-    <main class="container">
-      <div
-        class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm"
+      <nav
+        class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+        aria-label="Main navigation"
       >
-        <div class="lh-1">
-          <h1 class="h6 mb-0 text-white lh-1">{{ usuario.nome }}</h1>
-        </div>
-      </div>
-
-      <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Publicações</h6>
-        {% for p in posts %}
-        <div class="d-flex text-muted pt-3">
-          <p class="pb-3 mb-0 small lh-sm">
-            <strong class="d-block text-gray-dark" style="width: 50em">
-              {{ p.autor.nome }}
-            </strong>
-            {{ p.conteudo }}
-          </p>
+        <div class="container-fluid">
+          <a class="navbar-brand" href="http://localhost:8000/inicio"
+            >FC Solutions©</a
+          >
 
           <div
             class="navbar-collapse offcanvas-collapse"
             id="navbarsExampleDefault"
           ></div>
 
-          <a href="http://localhost:8000/publicacao/{{ p.id }}">
-            <button
-              class="btn btn-outline-dark"
-              style="width: max-content; font-size: small"
+          <a href="http://localhost:8000/post"
+            ><button
+              class="btn btn-outline-light"
               type="submit"
+              style="margin-inline: 0.9em"
             >
-              Exibir publicação
-            </button></a
-          >
-        </div>
-        {% endfor %}
-      </div>
-    </main>
-    {% else %}
-    <nav
-      class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
-      aria-label="Main navigation"
-    >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">FC Solutions©</a>
-      </div>
-    </nav>
+              Publicar
+            </button>
+          </a>
 
-    <div class="text-center">
-      <h1>Você não está logado</h1>
-      <a href="http://localhost:8000/conta/login"
-        ><button class="btn btn-primary" type="submit">Fazer login</button></a
+          <a href="http://localhost:8000/conta/logout"
+            ><button class="btn btn-outline-light" type="submit">Sair</button>
+          </a>
+        </div>
+      </nav>
+      <div class="nav-scroller bg-body shadow-sm">
+        <nav class="nav nav-underline" aria-label="Secondary navigation">
+          <a
+            class="nav-link active"
+            aria-current="page"
+            href="http://localhost:8000/inicio"
+            >Página Inicial</a
+          >
+          <a class="nav-link" href="http://localhost:8000/perfil">Perfil</a>
+        </nav>
+      </div>
+
+      <main class="container">
+        <div
+          class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm"
+        >
+          <div class="lh-1">
+            <h1 class="h6 mb-0 text-white lh-1" style="font-size: large">
+              {{ usuario.nome }}
+            </h1>
+          </div>
+        </div>
+
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <h6 class="border-bottom pb-2 mb-0" style="font-size: 1.3em">
+            Publicações dos seguidores
+          </h6>
+          {% for p in posts %}
+          <div class="d-flex text-muted pt-3">
+            <p class="pb-3 mb-0 small lh-sm" style="color: #000000">
+              <a
+                style="color: #6c757d; text-decoration: none; font-size: 1.1em"
+                aria-current="page"
+                href="http://localhost:8000/{{p.autor.usuario}}"
+                ><strong
+                  class="d-block text-gray-dark"
+                  style="
+                    color: #000000;
+                    text-decoration: none;
+                    font-size: 1.03em;
+                    font-weight: bolder;
+                    width: 50em;
+                  "
+                >
+                  {{ p.autor.nome }}
+                </strong></a
+              >
+              {{ p.conteudo }}
+            </p>
+
+            <div
+              class="navbar-collapse offcanvas-collapse"
+              id="navbarsExampleDefault"
+            ></div>
+
+            <a href="http://localhost:8000/publicacao/{{ p.id }}">
+              <button
+                class="btn btn-outline-dark"
+                style="width: max-content; font-size: small"
+                type="submit"
+              >
+                Exibir publicação
+              </button></a
+            >
+          </div>
+          {% endfor %}
+        </div>
+      </main>
+    {% else %}
+      <nav
+        class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+        aria-label="Main navigation"
       >
-    </div>
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">FC Solutions©</a>
+        </div>
+      </nav>
+      <div class="text-center">
+        <h1>Você não está logado</h1>
+        <a href="http://localhost:8000/conta/login"
+          ><button class="btn btn-primary" type="submit">Fazer login</button></a
+        >
+      </div>
     {% endif %}
   </body>
 </html>
