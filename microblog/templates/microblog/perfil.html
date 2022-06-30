@@ -94,10 +94,28 @@
         {% for p in posts %}
         <div class="d-flex text-muted pt-3">
           <p class="pb-3 mb-0 small lh-sm">
-            <strong class="d-block text-gray-dark"> {{ p.conteudo }} </strong>
+            <strong class="d-block text-gray-dark" style="width: 50em">
+              {{ p.conteudo }}
+            </strong>
             {{ p.data }}
           </p>
+
+          <div
+            class="navbar-collapse offcanvas-collapse"
+            id="navbarsExampleDefault"
+          ></div>
+
+          <a href="http://localhost:8000/publicacao/{{ p.id }}">
+            <button
+              class="btn btn-outline-dark"
+              style="width: max-content; font-size: small"
+              type="submit"
+            >
+              Exibir publicação
+            </button></a
+          >
         </div>
+
         {% endfor %}
       </div>
     </main>

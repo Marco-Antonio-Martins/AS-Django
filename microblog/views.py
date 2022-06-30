@@ -1,7 +1,9 @@
+from tkinter.tix import Form
+from urllib import request
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
-from .forms import PostForm
-from .models import Pessoa, Post
+from .forms import PostForm, ComentarioForm
+from .models import Pessoa, Post, Comentario
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse
 
@@ -105,6 +107,37 @@ def followers(request, user):
             raise Http404('Nome de Usuário não encontrado')
 
     return HttpResponseRedirect(reverse('usuario', args=[user]))
+
+def publicacao(request, id_publi):
+
+    usuario = Pessoa.objects.get(usuario = request.user)
+    publicacao = Post.objects.get(pk=id_publi)
+    pessoa = Pessoa.objects.get(usuario=publicacao.autor.usuario)
+    comentarios = publicacao.comentario_set.all()
+    return render (request, 'microblog/publicacao.html', {'usuario' : usuario, 'publicacao' : publicacao, 'comentarios' : comentarios, 'pessoa' : pessoa})
  
-def publicacao_extended(request):
-    pass
+class ComentarioView(FormView):
+
+    template_name = 'microblog/comentario.html'
+    form_class = ComentarioForm
+
+    def get(self, request):
+        usuario = Pessoa.objects.get(usuario = self.request.user)
+        pk_publi = request.POST['publi']
+        publicacao = Post.objects.get(pk=pk_publi)
+        return render (request, self.template_name, {'usuario' : usuario, 'publicacao' : publicacao, 'form' : self.form_class })
+    
+    def form_valid(self, form):  
+
+        if usuario.is_authenticated:
+
+            usuario = Pessoa.objects.get(usuario = self.request.user)            
+            dados = form.clean()
+            publicacao = Post.objects.get(pk=dados['id_publi'])
+            comentario = Comentario(autor=usuario, post=publicacao, conteudo=dados['comentario'])
+            comentario.save()
+            return super().form_valid(form)
+          
+
+    def get_success_url(self):
+        return reverse('index') #alterar para post_sucesso
